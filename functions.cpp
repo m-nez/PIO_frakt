@@ -1,6 +1,5 @@
-#ifndef _FUNCTIONS_HPP
-#define _FUNCTIONS_HPP
+#include "functions.hpp"
 
-double func(double x, double y, int iter);
-
-#endif
+double func(double x, double y, int iter) {
+	return 0;
+}

@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall
 
 main: plane.o bmp.o functions.o main.o
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ $(CFLAGS)
 
 .PHONY: clean
 

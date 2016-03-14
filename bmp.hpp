@@ -3,6 +3,6 @@
 
 #include <string>
 
-int to_bmp(std::string, int width, int height, unsigned char* data);
+int to_bmp(std::string filename, int width, int height, unsigned char* data);
 
 #endif
