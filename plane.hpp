@@ -6,10 +6,10 @@
 class Plane {
 	private:
 		std::string name;
-		int up;
-		int down;
-		int left;
-		int right;
+		double up;
+		double down;
+		double left;
+		double right;
 		int width;
 		int height;
 		unsigned char* data;
