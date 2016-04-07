@@ -1,11 +1,8 @@
 #ifndef _PLANE_HPP
 #define _PLANE_HPP
 
-#include <string>
-
 class Plane {
-	private:
-		std::string name;
+	public:
 		double up;
 		double down;
 		double left;
@@ -13,10 +10,10 @@ class Plane {
 		int width;
 		int height;
 		unsigned char* data;
-	public:
-		int to_file();
-		int parse_args(int argc, char** argv);
-		Plane();
-		Plane(int argc, char** argv);
+
+		void resize(int width, int heght);
+		Plane(int width, int height);
+		~Plane();
 };
+
 #endif

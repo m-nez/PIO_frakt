@@ -1,14 +1,23 @@
 #include "plane.hpp"
-#include "bmp.hpp"
+#include <stdio.h>
 
-int Plane::parse_args(int argc, char** argv) {
-	return 0;
+void Plane::resize(int width, int height) {
+	this->width = width;
+	this->height = height;
+	if (data != 0) {
+		delete data;
+	}
+
+	data = new unsigned char[width * height *3];
 }
 
-Plane::Plane(int argc, char** argv) {
-	parse_args(argc, argv);
+Plane::Plane(int width, int height) {
+	data = 0;
+	resize(width, height);
 }
 
-int Plane::to_file() {
-	to_bmp(name, width, height, data);
+Plane::~Plane() {
+	if (data != 0) {
+		delete data;
+	}
 }

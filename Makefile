@@ -1,8 +1,21 @@
 CC=g++
-CFLAGS=-Wall
+CFLAGS=-Wall -ggdb
+GTK=`pkg-config --cflags --libs gtk+-3.0`
 
-main: plane.o bmp.o functions.o main.o
-	$(CC) $^ -o $@ $(CFLAGS)
+fract: main.o gui.o plane.o renderer.o
+	$(CC) $^ -o $@ $(CFLAGS) $(GTK)
+
+main.o: main.cpp
+	$(CC) $^ -c $(CFLAGS) $(GTK)
+
+gui.o: gui.cpp
+	$(CC) $^ -c $(CFLAGS) $(GTK)
+
+renderer.o: renderer.cpp
+	$(CC) $^ -c $(CFLAGS) $(GTK)
+
+plane.o: plane.cpp
+	$(CC) $^ -c $(CFLAGS) $(GTK)
 
 .PHONY: clean
 
