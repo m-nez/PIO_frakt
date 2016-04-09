@@ -9,6 +9,20 @@ void GUI::init() {
 
 void GUI::render() {
 	rs[rs_current].render();
+	if (window->pixbuf) {
+		g_object_unref(window->pixbuf);
+	}
+	window->pixbuf = gdk_pixbuf_new_from_data (
+			plane->data,
+			GDK_COLORSPACE_RGB,
+			FALSE,
+			8,
+			plane->width,
+			plane->height,
+			plane->width*3,
+			NULL,
+			NULL);
+
 }
 
 GUI::GUI() {
@@ -25,37 +39,30 @@ GUI::~GUI() {
 }
 
 static gboolean
-button_press_callback (GtkWidget      *event_box,
-                       GdkEventButton *event,
-                       gpointer        data)
+draw_callback (GtkWidget *widget, cairo_t *cr, gpointer user_data)
 {
-  	GUI* gptr = (GUI*) data;
+  	GUI* gptr = (GUI*) user_data;
 	Window* w = gptr->get_window();
+
+	gdk_cairo_set_source_pixbuf (cr,
+			w->pixbuf,
+			0.0,
+			0.0);
+
+	cairo_paint(cr);
+
+	return FALSE;
+}
+
+static void
+da_allocate_callback(GtkWidget    *widget,
+		GdkRectangle *allocation,
+		gpointer      user_data)
+{
+  	GUI* gptr = (GUI*) user_data;
 	Plane* plane = gptr->get_plane();
-	
-	/* TEST ONLY */
-	plane->up		/= 0.9;
-	plane->down		/= 0.9;
-	plane->left		/= 0.9;
-	plane->right	/= 0.9;
-
+	plane->resize(allocation->width, allocation->height);
 	gptr->render();
-
-	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data (
-			plane->data,
-			GDK_COLORSPACE_RGB,
-			FALSE,
-			8,
-			plane->width,
-			plane->height,
-			plane->width*3,
-			NULL,
-			NULL);
-
-	gtk_image_set_from_pixbuf(GTK_IMAGE(w->fract_image), pixbuf);
-	g_object_unref(pixbuf);
-
-  return TRUE;
 }
 
 
@@ -64,23 +71,16 @@ static void activate(GtkApplication *app, gpointer user_data)
 	GUI* gptr = (GUI*) user_data;
 	Window* w = gptr->get_window();
 
-	w->window = gtk_application_window_new(app);
-	gtk_window_set_title(GTK_WINDOW (w->window), "Fractal Generator");
-	gtk_window_set_default_size(GTK_WINDOW(w->window), gptr->get_width(), gptr->get_height());
-
-	w->fract_image = gtk_image_new();
-	w->fract_event_box = gtk_event_box_new();
-	gtk_container_add(GTK_CONTAINER(w->fract_event_box), w->fract_image);
-	g_signal_connect(G_OBJECT(w->fract_event_box),
-			"button_press_event",
-			G_CALLBACK(button_press_callback),
-			gptr);
+	w->builder = gtk_builder_new_from_file ("builder.ui");
 
 	gptr->render();
 
-	gtk_container_add(GTK_CONTAINER(w->window), GTK_WIDGET(w->fract_event_box));
+	w->window = GTK_WIDGET(gtk_builder_get_object(w->builder, "window"));
+	w->drawing_area_fract = GTK_WIDGET(gtk_builder_get_object(w->builder, "drawingarea_fract"));
+	g_signal_connect (w->drawing_area_fract, "draw", G_CALLBACK(draw_callback), gptr);
+	g_signal_connect (w->drawing_area_fract, "size-allocate", G_CALLBACK(da_allocate_callback), gptr);
 
-	gtk_widget_show_all(GTK_WIDGET(w->window));
+	gtk_application_add_window(app, GTK_WINDOW(w->window));
 }
 
 
