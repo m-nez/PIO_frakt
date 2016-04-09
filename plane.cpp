@@ -14,6 +14,10 @@ void Plane::resize(int width, int height) {
 Plane::Plane(int width, int height) {
 	data = 0;
 	resize(width, height);
+	up = 1.0;
+	down = -1.0;
+	left = -1.0;
+	right = 1.0;
 }
 
 Plane::~Plane() {

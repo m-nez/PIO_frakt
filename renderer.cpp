@@ -13,17 +13,33 @@ void Renderer::render() {
 	function(plane);
 }
 
+static void color(double x, unsigned char* pixel) {
+	unsigned char color_min[] = {0, 255, 255};
+	unsigned char color_max[] = {255, 0, 0};
+
+	for(int i = 0; i < 3; ++i) {
+		pixel[i] = color_min[i] * (1.0 - x)  + color_max[i] * x;
+	}
+}
+
 void test_func(Plane* plane) {
 	int i, j, k;
-	for (i = 0; i < plane->width * plane->height * 3; ++i) {
-		plane->data[i] = 0;
-	}
+	double val;
+	double x, y;
+	double dx = (plane->right - plane->left) / plane->width; /* Left -> Right */
+	double dy = -(plane->up - plane->down) / plane->height; /* Up -> Down */
 
-	for(i = 0; i < plane->height; ++i) {
-		for(j = i; j < plane->width; j++) {
-			for(k = 0; k < 3; ++k) {
-				plane->data[(i*plane->width + j)*3 + k] = j % 255;
+	for(i = 0, y = plane->up; i < plane->height; ++i, y += dy) {
+		for(j = 0, x = plane->left; j < plane->width; j++, x += dx) {
+			val = (x + y*y*y)/2;
+			for (k = 0; k < 10; ++k) {
+				val = val * val - 2 + ((x*x+y*y)/16);
 			}
+
+			val += 2;
+			val /= 4;
+
+			color(val, plane->data + (i*plane->width + j)*3);
 		}
 	}
 }
