@@ -14,6 +14,9 @@ class Window {
 		GtkWidget* down_entry;
 		GtkWidget* left_entry;
 		GtkWidget* right_entry;
+		GtkWidget* height_entry; //added
+		GtkWidget* width_entry; //added
+
 
 		GtkWidget* render_button;
 

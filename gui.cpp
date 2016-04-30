@@ -1,5 +1,6 @@
 #include "gui.hpp"
 #include <stdio.h>
+#include <stdlib.h>
 
 void GUI::init() {
 	plane = new Plane(width, height);
@@ -64,6 +65,22 @@ da_allocate_callback(GtkWidget    *widget,
 	plane->resize(allocation->width, allocation->height);
 	gptr->render();
 }
+static void						//added
+parse_args_callback(GtkWidget *widget,
+		gpointer user_data)
+
+{
+	GUI* gptr = (GUI*) user_data;
+	Plane* plane = gptr->get_plane();
+	Window* w = gptr->get_window();
+	plane->up = atof(gtk_entry_get_text((GtkEntry*)w->up_entry));
+	plane->down = atof(gtk_entry_get_text((GtkEntry*)w->down_entry));
+	plane->right = atof(gtk_entry_get_text((GtkEntry*)w->right_entry));
+	plane->left = atof(gtk_entry_get_text((GtkEntry*)w->left_entry));
+	plane->resize(atoi(gtk_entry_get_text((GtkEntry*)w->width_entry)),atoi(gtk_entry_get_text((GtkEntry*)w->height_entry)));
+	gptr->render();
+
+}
 
 
 static void activate(GtkApplication *app, gpointer user_data)
@@ -79,7 +96,16 @@ static void activate(GtkApplication *app, gpointer user_data)
 	w->drawing_area_fract = GTK_WIDGET(gtk_builder_get_object(w->builder, "drawingarea_fract"));
 	g_signal_connect (w->drawing_area_fract, "draw", G_CALLBACK(draw_callback), gptr);
 	g_signal_connect (w->drawing_area_fract, "size-allocate", G_CALLBACK(da_allocate_callback), gptr);
-
+	// added
+	w->left_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry1"));
+	w->right_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry2"));
+	w->up_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry3"));
+	w->down_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry4"));
+	w->width_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry5"));
+	w->height_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry6"));
+	w->render_button = GTK_WIDGET(gtk_builder_get_object(w->builder, "button_render"));
+	g_signal_connect (w->render_button, "clicked", G_CALLBACK(parse_args_callback),gptr);
+	//end
 	gtk_application_add_window(app, GTK_WINDOW(w->window));
 }
 
