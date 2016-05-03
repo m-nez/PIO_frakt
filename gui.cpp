@@ -72,8 +72,16 @@ static void
 save_file(GtkWidget *widget, gpointer user_data) 
 {
 	GUI* gptr = (GUI*) user_data;
-	Plane plane(500,400);
-	Renderer renderer("abc",gptr->get_rs()[gptr->get_rs_current()].get_function() );
+	Window* w = gptr->get_window();
+	Plane* p = gptr->get_plane();
+	int width = atoi(gtk_entry_get_text((GtkEntry*)w->width_entry));
+	int height = atoi(gtk_entry_get_text((GtkEntry*)w->height_entry));
+	Plane plane(width, height);
+	plane.up = p->up;
+	plane.down = p->down;
+	plane.left = p->left;
+	plane.right = p->right;
+	Renderer renderer("", gptr->get_rs()[gptr->get_rs_current()].get_function());
 	renderer.set_plane(&plane);
 	renderer.render();
 	
@@ -90,8 +98,8 @@ save_file(GtkWidget *widget, gpointer user_data)
 			NULL,
 			NULL);
 
-	gdk_pixbuf_savev (pixbuf, "New", "bmp", NULL, NULL, &error); 
-	delete error;
+	gdk_pixbuf_savev (pixbuf, "New.bmp", "bmp", NULL, NULL, &error); 
+	g_object_unref(pixbuf);
 }
 
 static void
