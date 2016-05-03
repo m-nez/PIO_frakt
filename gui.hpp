@@ -29,6 +29,7 @@ class GUI {
 		Window* get_window() { return window; };
 		int get_rs_count() { return rs_count; };
 		Renderer* get_rs() { return rs; };
+		int get_rs_current() {return rs_current;};
 };
 
 #endif
