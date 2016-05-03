@@ -13,7 +13,7 @@ void Renderer::render() {
 	function(plane);
 }
 
-static void color(double x, unsigned char* pixel) {
+static inline void color(double x, unsigned char* pixel) {
 	unsigned char pal[][3] = {{0,0,0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
 	for(int i = 0; i < 3; ++i) {
 		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
