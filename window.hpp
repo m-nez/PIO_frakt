@@ -14,14 +14,13 @@ class Window {
 		GtkWidget* down_entry;
 		GtkWidget* left_entry;
 		GtkWidget* right_entry;
-		GtkWidget* height_entry; //added
-		GtkWidget* width_entry; //added
-
-
+		GtkWidget* height_entry;
+		GtkWidget* width_entry;
+		GtkWidget* combobox;
 		GtkWidget* render_button;
-
 		GtkWidget* drawing_area_fract;
 		GdkPixbuf* pixbuf;
+		double ex1, ey1, ex2, ey2;
 
 		Window();
 };

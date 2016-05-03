@@ -27,6 +27,8 @@ class GUI {
 		int get_height() { return height; };
 		Plane* get_plane() { return plane; };
 		Window* get_window() { return window; };
+		int get_rs_count() { return rs_count; };
+		Renderer* get_rs() { return rs; };
 };
 
 #endif

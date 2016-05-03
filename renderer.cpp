@@ -14,33 +14,9 @@ void Renderer::render() {
 }
 
 static void color(double x, unsigned char* pixel) {
-	unsigned char color_min[] = {0, 255, 255};
-	unsigned char color_max[] = {255, 0, 0};
-
+	unsigned char pal[][3] = {{0,0,0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
 	for(int i = 0; i < 3; ++i) {
-		pixel[i] = color_min[i] * (1.0 - x)  + color_max[i] * x;
-	}
-}
-
-void test_func(Plane* plane) {
-	int i, j, k;
-	double val;
-	double x, y;
-	double dx = (plane->right - plane->left) / plane->width; /* Left -> Right */
-	double dy = -(plane->up - plane->down) / plane->height; /* Up -> Down */
-
-	for(i = 0, y = plane->up; i < plane->height; ++i, y += dy) {
-		for(j = 0, x = plane->left; j < plane->width; j++, x += dx) {
-			val = (x + y*y*y)/2;
-			for (k = 0; k < 10; ++k) {
-				val = val * val - 2 + ((x*x+y*y)/16);
-			}
-
-			val += 2;
-			val /= 4;
-
-			color(val, plane->data + (i*plane->width + j)*3);
-		}
+		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
 	}
 }
 
@@ -57,7 +33,7 @@ void set_Mandelbrot(Plane* plane) {
 		for(j = 0, x = plane->left; j < plane->width; j++, x += dx) {
 			series[0]=0;
 			series[1]=0;
-			for (k = 0; k < 10000; ++k) {
+			for (k = 0; k < 100; ++k) {
 				tmpserie = series[0]*series[0] - series[1]*series[1] + x;
 				series[1] = 2*series[0]*series[1] + y;
 				series[0] = tmpserie;
@@ -65,7 +41,7 @@ void set_Mandelbrot(Plane* plane) {
 					break;
 			}
 
-			val = (double)k/10000;
+			val = (double)k/100;
 
 			color( val, plane->data + (i*plane->width + j)*3);
 		}
@@ -86,7 +62,7 @@ void set_Julia(Plane* plane) {
 		for(j = 0, x = plane->left; j < plane->width; j++, x += dx) {
 			series[0]=x;
 			series[1]=y;
-			for (k = 0; k < 1000; ++k) {
+			for (k = 0; k < 100; ++k) {
 				tmpserie = series[0]*series[0] - series[1]*series[1] + c[0];
 				series[1] = 2*series[0]*series[1] + c[1];
 				series[0] = tmpserie;
@@ -94,7 +70,7 @@ void set_Julia(Plane* plane) {
 					break;
 			}
 
-			val = (double)k/1000;
+			val = (double)k/100;
 
 			color( val, plane->data + (i*plane->width + j)*3);
 		}
@@ -115,7 +91,7 @@ void cubic_Julia(Plane* plane) {
 		for(j = 0, x = plane->left; j < plane->width; j++, x += dx) {
 			series[0]=x;
 			series[1]=y;
-			for (k = 0; k < 1000; ++k) {
+			for (k = 0; k < 100; ++k) {
 				tmpserie = series[0]*series[0]*series[0] - 3*series[0]*series[1]*series[1] + c[0];
 				series[1] = 3*series[0]*series[0]*series[1] - series[1]*series[1]*series[1] + c[1];
 				series[0] = tmpserie;
@@ -123,7 +99,7 @@ void cubic_Julia(Plane* plane) {
 					break;
 			}
 
-			val = (double)k/1000;
+			val = (double)k/100;
 
 			color( val, plane->data + (i*plane->width + j)*3);
 		}
@@ -131,7 +107,6 @@ void cubic_Julia(Plane* plane) {
 }
 
 static r_keys r_map[] = {
-	{"test", test_func},
 	{"Mandelbrot", set_Mandelbrot},
 	{"Julia", set_Julia},
 	{"Cubic Julia", cubic_Julia}

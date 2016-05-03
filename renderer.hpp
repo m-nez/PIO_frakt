@@ -11,6 +11,7 @@ class Renderer {
 		int custom;
 		std::string id;
 	public:
+		std::string get_id() {return id;};
 		void set_id(std::string id) { this->id = id; };
 		void set_plane(Plane* plane) { this->plane = plane; };
 		void set_function(void (*function)(Plane*)) {
