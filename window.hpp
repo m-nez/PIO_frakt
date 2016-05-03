@@ -18,6 +18,7 @@ class Window {
 		GtkWidget* width_entry;
 		GtkWidget* combobox;
 		GtkWidget* render_button;
+		GtkWidget* save_button;
 		GtkWidget* drawing_area_fract;
 		GdkPixbuf* pixbuf;
 		double ex1, ey1, ex2, ey2;
