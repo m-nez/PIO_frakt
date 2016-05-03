@@ -67,6 +67,33 @@ da_allocate_callback(GtkWidget    *widget,
 	plane->resize(allocation->width, allocation->height);
 	gptr->render();
 }
+
+static void
+save_file(GtkWidget *widget, gpointer user_data) 
+{
+	GUI* gptr = (GUI*) user_data;
+	Plane plane(500,400);
+	Renderer renderer("abc",gptr->get_rs()[gptr->get_rs_current()].get_function() );
+	renderer.set_plane(&plane);
+	renderer.render();
+	
+	GError *error = NULL;
+
+	GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data (
+			plane.data,
+			GDK_COLORSPACE_RGB,
+			FALSE,
+			8,
+			plane.width,
+			plane.height,
+			plane.width*3,
+			NULL,
+			NULL);
+
+	gdk_pixbuf_savev (pixbuf, "New", "bmp", NULL, NULL, &error); 
+	delete error;
+}
+
 static void
 parse_args_callback(GtkWidget *widget,
 		gpointer user_data)
@@ -186,7 +213,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 	Window* w = gptr->get_window();
 
 	w->builder = gtk_builder_new_from_file ("builder.ui");
-
+	w->save_button = GTK_WIDGET(gtk_builder_get_object(w->builder, "button_save"));
 	w->window = GTK_WIDGET(gtk_builder_get_object(w->builder, "window"));
 	w->drawing_area_fract = GTK_WIDGET(gtk_builder_get_object(w->builder, "drawingarea_fract"));
 	w->left_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry1"));
@@ -222,6 +249,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 	g_signal_connect (w->render_button, "clicked", G_CALLBACK(parse_args_callback), gptr);
 	g_signal_connect (w->drawing_area_fract, "button-press-event", G_CALLBACK(button_press_callback), gptr);
 	g_signal_connect (w->drawing_area_fract, "button-release-event", G_CALLBACK(button_release_callback), gptr);
+	g_signal_connect (w->save_button, "clicked", G_CALLBACK (save_file), gptr);
 
 	gptr->render();
 	gtk_application_add_window(app, GTK_WINDOW(w->window));
