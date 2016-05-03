@@ -4,6 +4,8 @@
 #include "plane.hpp"
 #include <string>
 
+typedef void (*RendererFunction) (Plane*);
+
 class Renderer {
 	private:
 		Plane* plane;
@@ -17,6 +19,7 @@ class Renderer {
 		void set_function(void (*function)(Plane*)) {
 			this->function = function;
 		};
+		RendererFunction get_function() {return function;};
 
 
 		void render();
