@@ -204,6 +204,15 @@ button_release_callback(GtkWidget *widget,
 	u = plane->up;
 	d = plane->down;
 
+	if (x1 > x2) {
+		x2 = x1;
+		x1 = event_button->x;
+	}
+	if (y1 > y2) {
+		y2 = y1;
+		y1 = event_button->y;
+	}
+
 	plane->left = l * (1.0 - x1/w) + r * x1/w;
 	plane->right = l * (1.0 - x2/w) + r * x2/w;
 	plane->up = u * (1.0 - y1/h) + d * y1/h;
