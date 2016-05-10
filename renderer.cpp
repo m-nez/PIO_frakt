@@ -13,8 +13,35 @@ void Renderer::render() {
 	function(plane);
 }
 
+static inline void black_yellow(double x, unsigned char* pixel) {
+	unsigned char pal[][3] = {{0, 0, 0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
+	for(int i = 0; i < 3; ++i) {
+		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
+	}
+}
+
+static inline void black_blue(double x, unsigned char* pixel) {
+	unsigned char pal[][3] = {{0, 0, 0}, {13, 25, 255}, {36, 39, 208}, {57, 229, 235}};
+	for(int i = 0; i < 3; ++i) {
+		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
+	}
+}
+
 static inline void color(double x, unsigned char* pixel) {
-	unsigned char pal[][3] = {{0,0,0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
+	for (int i = 0; i < 3;++i) {
+		pixel[i] = 255 * x;
+	}
+}
+
+static inline void green_yellow(double x, unsigned char* pixel) {
+	unsigned char pal[][3] = {{19, 65, 0}, {255, 255, 255}, {252, 255, 23}, {225, 208, 36}};
+	for(int i = 0; i < 3; ++i) {
+		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
+	}
+}
+
+static inline void red_white(double x, unsigned char* pixel) {
+	unsigned char pal[][3] = {{95, 5, 0}, {255, 255, 255}, {252, 255, 23}, {255, 255, 255}};
 	for(int i = 0; i < 3; ++i) {
 		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
 	}
