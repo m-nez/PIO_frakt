@@ -9,6 +9,7 @@ class Plane {
 		double right;
 		int width;
 		int height;
+		void (*color)(double, unsigned char*);
 		unsigned char* data;
 
 		void resize(int width, int heght);

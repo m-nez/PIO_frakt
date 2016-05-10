@@ -34,4 +34,12 @@ typedef struct {
 	void (*function)(Plane*);
 } r_keys;
 
+typedef void (*color_function)(double, unsigned char*);
+
+typedef struct {
+	const char* id;
+	color_function function;
+} c_keys;
+
+c_keys* package_colors(int* count);
 #endif

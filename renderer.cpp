@@ -13,13 +13,6 @@ void Renderer::render() {
 	function(plane);
 }
 
-static inline void color(double x, unsigned char* pixel) {
-	unsigned char pal[][3] = {{0,0,0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
-	for(int i = 0; i < 3; ++i) {
-		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
-	}
-}
-
 void set_Mandelbrot(Plane* plane) {
 	int i, j, k;
 	double series[2];
@@ -43,7 +36,7 @@ void set_Mandelbrot(Plane* plane) {
 
 			val = (double)k/100;
 
-			color( val, plane->data + (i*plane->width + j)*3);
+			plane->color( val, plane->data + (i*plane->width + j)*3);
 		}
 	}
 }
@@ -72,7 +65,7 @@ void set_Julia(Plane* plane) {
 
 			val = (double)k/100;
 
-			color( val, plane->data + (i*plane->width + j)*3);
+			plane->color( val, plane->data + (i*plane->width + j)*3);
 		}
 	}
 }
@@ -101,7 +94,7 @@ void cubic_Julia(Plane* plane) {
 
 			val = (double)k/100;
 
-			color( val, plane->data + (i*plane->width + j)*3);
+			plane->color( val, plane->data + (i*plane->width + j)*3);
 		}
 	}
 }
@@ -114,6 +107,27 @@ static r_keys r_map[] = {
 
 #define NUM_RENDERERS (sizeof(r_map)/sizeof(r_keys))
 
+
+static void color(double x, unsigned char* pixel) {
+	unsigned char pal[][3] = {{0,0,0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
+	for(int i = 0; i < 3; ++i) {
+		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
+	}
+}
+
+static void color_grayscale(double x, unsigned char* pixel) {
+	for	(int i = 0; i < 3; ++i) {
+		pixel[i] = 255 * x;
+	}
+}
+
+static c_keys c_map[] = {
+	{"Baroque", color},
+	{"Grayscale", color_grayscale}
+};
+
+#define NUM_COLORS (sizeof(c_map)/sizeof(c_keys))
+
 Renderer* package_renderers(Plane* plane, int* count) {
 	Renderer* rs = new Renderer[NUM_RENDERERS];
 	for(unsigned int i = 0; i < NUM_RENDERERS; ++i) {
@@ -124,4 +138,9 @@ Renderer* package_renderers(Plane* plane, int* count) {
 
 	*count = NUM_RENDERERS;
 	return rs;
+}
+
+c_keys* package_colors(int* count) {
+	*count = NUM_COLORS;
+	return c_map;
 }

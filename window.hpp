@@ -17,6 +17,7 @@ class Window {
 		GtkWidget* height_entry;
 		GtkWidget* width_entry;
 		GtkWidget* combobox;
+		GtkWidget* combobox_color;
 		GtkWidget* render_button;
 		GtkWidget* save_button;
 		GtkWidget* drawing_area_fract;

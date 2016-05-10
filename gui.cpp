@@ -7,10 +7,14 @@ void GUI::init() {
 	plane = new Plane(width, height);
 	rs = package_renderers(plane, &rs_count);
 	rs_current = 0;
+	colors = package_colors(&color_count);
+	color_current = 0;
 }
 
 void GUI::render() {
 	rs_current = gtk_combo_box_get_active((GtkComboBox*)window->combobox);
+	color_current = gtk_combo_box_get_active((GtkComboBox*)window->combobox_color);
+	plane->color = colors[color_current].function;
 	rs[rs_current].render();
 	if (window->pixbuf) {
 		g_object_unref(window->pixbuf);
@@ -241,6 +245,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 	w->height_entry = GTK_WIDGET(gtk_builder_get_object(w->builder, "entry6"));
 	w->render_button = GTK_WIDGET(gtk_builder_get_object(w->builder, "button_render"));
 	w->combobox = GTK_WIDGET(gtk_builder_get_object(w->builder, "combobox"));
+	w->combobox_color = GTK_WIDGET(gtk_builder_get_object(w->builder, "combobox_color"));
 
 	gtk_entry_set_text((GtkEntry*)w->left_entry, "-1.0");
 	gtk_entry_set_text((GtkEntry*)w->right_entry, "1.0");
@@ -256,6 +261,13 @@ static void activate(GtkApplication *app, gpointer user_data)
 			   	gptr->get_rs()[i].get_id().c_str());
 	}
 	gtk_combo_box_set_active((GtkComboBox*)w->combobox, 0);
+
+	for(int i = 0; i < gptr->get_color_count(); ++i) {
+		gtk_combo_box_text_append_text (
+				(GtkComboBoxText*)w->combobox_color,
+			   	gptr->get_colors()[i].id);
+	}
+	gtk_combo_box_set_active((GtkComboBox*)w->combobox_color, 0);
 
 	gdk_window_set_events(
 			gtk_widget_get_window(w->drawing_area_fract),
