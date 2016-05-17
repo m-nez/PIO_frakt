@@ -85,6 +85,7 @@ save_file(GtkWidget *widget, gpointer user_data)
 	plane.down = p->down;
 	plane.left = p->left;
 	plane.right = p->right;
+	plane.color = p->color;
 	Renderer renderer("", gptr->get_rs()[gptr->get_rs_current()].get_function());
 	renderer.set_plane(&plane);
 	renderer.render();
