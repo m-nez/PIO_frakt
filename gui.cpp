@@ -76,6 +76,33 @@ static void
 save_file(GtkWidget *widget, gpointer user_data) 
 {
 	GUI* gptr = (GUI*) user_data;
+	GtkWidget *dialog;
+	GtkFileChooser *chooser;
+	GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_SAVE;
+	gint res;
+
+	dialog = gtk_file_chooser_dialog_new ("Save File",
+                                      NULL,
+                                      action,
+                                      "_Cancel",
+                                      GTK_RESPONSE_CANCEL,
+                                      "_Save",
+                                      GTK_RESPONSE_ACCEPT,
+                                      NULL);
+	chooser = GTK_FILE_CHOOSER (dialog);
+
+	gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
+
+
+	res = gtk_dialog_run (GTK_DIALOG (dialog));
+	if (res == GTK_RESPONSE_ACCEPT)
+  	{
+    	char *filename;
+
+    	filename = gtk_file_chooser_get_filename (chooser);
+
+
+
 	Window* w = gptr->get_window();
 	Plane* p = gptr->get_plane();
 	int width = atoi(gtk_entry_get_text((GtkEntry*)w->width_entry));
@@ -103,8 +130,15 @@ save_file(GtkWidget *widget, gpointer user_data)
 			NULL,
 			NULL);
 
-	gdk_pixbuf_savev (pixbuf, "New.bmp", "bmp", NULL, NULL, &error); 
+	gdk_pixbuf_savev (pixbuf, filename, "bmp", NULL, NULL, &error); 
 	g_object_unref(pixbuf);
+
+
+    	
+    	g_free (filename);
+  	}
+
+	gtk_widget_destroy (dialog);
 }
 
 static void
