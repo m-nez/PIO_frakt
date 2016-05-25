@@ -1,28 +1,23 @@
-CC=g++
-CFLAGS=-Wall -ggdb
-GTK=`pkg-config --cflags --libs gtk+-3.0`
+default: fract
 
-fract: main.o gui.o plane.o renderer.o window.o
-	$(CC) $^ -o $@ $(CFLAGS) $(GTK)
+.PHONY: test
+.PHONY: fract
+.PHONY: deploy
 
-main.o: main.cpp
-	$(CC) $^ -c $(CFLAGS) $(GTK)
+BUILD_DIR=build
+INCLUDE_DIR=include
+fract:
+	cd src && $(MAKE)
 
-gui.o: gui.cpp
-	$(CC) $^ -c $(CFLAGS) $(GTK)
+test: deploy
+	cd test && $(MAKE)
 
-renderer.o: renderer.cpp
-	$(CC) $^ -c $(CFLAGS) $(GTK)
-
-plane.o: plane.cpp
-	$(CC) $^ -c $(CFLAGS) $(GTK)
-
-window.o: window.cpp
-	$(CC) $^ -c $(CFLAGS) $(GTK)
-
-test: fract
-	./fract
-.PHONY: clean
-
-clean:
-	rm ./*.o
+deploy: fract
+	cp -t $(BUILD_DIR) \
+		src/fractal \
+		src/libfract.so.1.0 \
+		src/builder.ui
+	cd $(BUILD_DIR) && \
+	ln -sf libfract.so.1.0 libfract.so.1 && \
+	ln -sf libfract.so.1.0 libfract.so
+	cp -t $(INCLUDE_DIR) src/*.hpp
