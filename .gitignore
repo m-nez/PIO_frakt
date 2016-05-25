@@ -3,3 +3,5 @@
 *.bmp
 *.so*
 fract
+build/*
+include/*
