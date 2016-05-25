@@ -13,6 +13,7 @@ test: deploy
 	cd test && $(MAKE)
 
 deploy: fract
+	mkdir -p $(BUILD_DIR)
 	cp -t $(BUILD_DIR) \
 		src/fractal \
 		src/libfract.so.1.0 \
