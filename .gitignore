@@ -3,5 +3,7 @@
 *.bmp
 *.so*
 fract
-build/*
-include/*
+build/
+include/
+src/fractal
+test/test

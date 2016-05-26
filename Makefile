@@ -21,4 +21,5 @@ deploy: fract
 	cd $(BUILD_DIR) && \
 	ln -sf libfract.so.1.0 libfract.so.1 && \
 	ln -sf libfract.so.1.0 libfract.so
+	mkdir -p $(INCLUDE_DIR)
 	cp -t $(INCLUDE_DIR) src/*.hpp
