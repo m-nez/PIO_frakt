@@ -252,6 +252,10 @@ button_release_callback(GtkWidget *widget,
 		y1 = event_button->y;
 	}
 
+	if ( fabs(x1 - x2) < 0.0001 || fabs(y1 - y2) < 0.0001 ) {
+		return;
+	}
+
 	plane->left = l * (1.0 - x1/w) + r * x1/w;
 	plane->right = l * (1.0 - x2/w) + r * x2/w;
 	plane->up = u * (1.0 - y1/h) + d * y1/h;

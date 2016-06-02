@@ -2,7 +2,8 @@ CC=g++
 CFLAGS=-Wall -ggdb -fPIC
 GTK=`pkg-config --cflags --libs gtk+-3.0`
 
-CLASSES=window.o \
+CLASSES=main.o \
+		window.o \
 		renderer.o \
 		plane.o \
 		gui.o
@@ -38,3 +39,4 @@ window.o: window.cpp
 
 clean:
 	rm -f ./*.o
+	rm -f ./*.so*

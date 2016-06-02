@@ -1,4 +1,4 @@
-default: fract
+default: deploy
 
 .PHONY: test
 .PHONY: fract
