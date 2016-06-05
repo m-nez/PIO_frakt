@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-g -Wall
+CFLAGS=-ggdb -Wall
 BUILD_DIR=../build
 INCLUDE_DIR=../include
 LIBS=-lgtest -lfract -lgtest_main

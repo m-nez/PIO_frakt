@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -ggdb -fPIC
 GTK=`pkg-config --cflags --libs gtk+-3.0`
 
-CLASSES=main.o \
+CLASSES= \
 		window.o \
 		renderer.o \
 		plane.o \
@@ -16,7 +16,7 @@ libfract.so.1.0: $(CLASSES)
 	ln -sf $@ libfract.so.1
 	ln -sf $@ libfract.so
 
-fractal: libfract.so.1.0
+fractal: main.o libfract.so.1.0
 	$(CC) main.o -Wl,-rpath=./ -L./ -lfract $(CFLAGS) -o $@ $(GTK)
 
 fractal_static: main.o gui.o plane.o renderer.o window.o
