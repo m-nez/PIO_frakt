@@ -2,6 +2,12 @@
 #include <stdio.h>
 
 void Plane::resize(int width, int height) {
+	if (width < 0) {
+		width = 0;
+	}
+	if (height < 0) {
+		height = 0;
+	}
 	this->width = width;
 	this->height = height;
 	if (data != 0) {
