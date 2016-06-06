@@ -203,20 +203,20 @@ static r_keys r_map[] = {
 #define NUM_RENDERERS (sizeof(r_map)/sizeof(r_keys))
 
 
-static void color_yellow(double x, unsigned char* pixel) {
+static void color_baroque(double x, unsigned char* pixel) {
 	unsigned char pal[][3] = {{0,0,0}, {0, 16, 128}, {255, 0, 0}, {255, 255, 48}};
 	for(int i = 0; i < 3; ++i) {
 		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
 	}
 }
 
-static void color_grayscale(double x, unsigned char* pixel) {
+void color_grayscale(double x, unsigned char* pixel) {
 	for	(int i = 0; i < 3; ++i) {
 		pixel[i] = 255 * x;
 	}
 }
 
-static inline void color_blue(double x, unsigned char* pixel) {
+void color_blue(double x, unsigned char* pixel) {
 	unsigned char pal[][3] = {{0, 0, 0}, {13, 25, 255}, {36, 39, 208}, {57, 229, 235}};
 	for(int i = 0; i < 3; ++i) {
 		pixel[i] = (pal[0][i] * (1.0- x) + pal[1][i] * x ) * (1.0 - x)  + x * (pal[2][i] * (1-x) + pal[3][i] * x);
@@ -238,7 +238,7 @@ static inline void color_red(double x, unsigned char* pixel) {
 }
 
 static c_keys c_map[] = {
-	{"Baroque", color_yellow},
+	{"Baroque", color_baroque},
 	{"Grayscale", color_grayscale},
 	{"Green&Yellow", color_green},
 	{"Red&White", color_red},
