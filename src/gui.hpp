@@ -35,6 +35,7 @@ class GUI {
 		Renderer* get_rs() { return rs; };
 		c_keys* get_colors() { return colors; };
 		int get_rs_current() {return rs_current;};
+		int get_color_current() {return color_current;};
 };
 
 #endif
