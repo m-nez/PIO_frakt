@@ -40,6 +40,13 @@ typedef struct {
 	const char* id;
 	color_function function;
 } c_keys;
+void color_grayscale(double x, unsigned char* pixel);
+void color_blue(double x, unsigned char* pixel);
 
+void Phoenix_Julia(Plane* plane) ;
+void Quadratur_Mandelbar(Plane* plane) ;
+void Quadratur_Mandelbrot(Plane* plane) ;
+void set_Mandelbrot(Plane* plane) ;
+void set_Julia(Plane* plane) ;
 c_keys* package_colors(int* count);
 #endif
