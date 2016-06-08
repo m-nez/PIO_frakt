@@ -48,5 +48,6 @@ void Quadratur_Mandelbar(Plane* plane) ;
 void Quadratur_Mandelbrot(Plane* plane) ;
 void set_Mandelbrot(Plane* plane) ;
 void set_Julia(Plane* plane) ;
+void cubic_Julia(Plane* plane) ;
 c_keys* package_colors(int* count);
 #endif
