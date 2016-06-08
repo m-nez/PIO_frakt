@@ -13,7 +13,7 @@ TEST(RenderFractalTest, set_Mandelbrot){
 	      plane.down = -0.50754;
 	      set_Mandelbrot( &plane );
 
-	      for(int i = 0; i < 10000; i++)
+	      for(int i = 0; i < 30000; i++)
 	            ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in set Mandelbrot";
 
 
@@ -23,7 +23,7 @@ TEST(RenderFractalTest, set_Mandelbrot){
 	      plane.down = -0.0381654;
 	      set_Mandelbrot( &plane );
 
-	      for(int i = 0; i < 10000; i++)
+	      for(int i = 0; i < 30000; i++)
               ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in set Mandelbrot";
 
 
@@ -33,7 +33,7 @@ TEST(RenderFractalTest, set_Mandelbrot){
 	      plane.down = 0.63383;
 	      set_Mandelbrot( &plane );
 
-	      for(int i = 0; i < 10000; i++)
+	      for(int i = 0; i < 30000; i++)
               ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in set Mandelbrot";
 } 
 
@@ -49,7 +49,7 @@ TEST(RenderFractalTest, Julia){
         plane.down = -0.115112; 
         set_Julia( &plane );
 
-        for(int i = 0; i < 10000; i++) 
+        for(int i = 0; i < 30000; i++) 
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Julia";
 
 
@@ -59,7 +59,7 @@ TEST(RenderFractalTest, Julia){
         plane.down = 0.448827;
         set_Julia( &plane );
 
-        for(int i = 0; i < 10000; i++) 
+        for(int i = 0; i < 30000; i++) 
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Julia";
 
 
@@ -69,7 +69,7 @@ TEST(RenderFractalTest, Julia){
         plane.down = 0.453888;
         set_Julia( &plane );
 
-        for(int i = 0; i < 10000; i++) 
+        for(int i = 0; i < 30000; i++) 
           ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in Julia";
 }
 
@@ -85,7 +85,7 @@ TEST(RenderFractalTest,Cubic_Julia){
         plane.down = -0.138186;
         cubic_Julia( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Cubic Julia";
 
 
@@ -95,7 +95,7 @@ TEST(RenderFractalTest,Cubic_Julia){
         plane.down = -0.375735;
         cubic_Julia( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Cubic Julia";
 
 
@@ -105,7 +105,7 @@ TEST(RenderFractalTest,Cubic_Julia){
         plane.down = 0.531066;
         cubic_Julia( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in Cubic Julia";
 }
 
@@ -121,7 +121,7 @@ TEST(RenderFractalTest, Quadratur_Mandelbrot){
         plane.down = -0.66813;
         Quadratur_Mandelbrot( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Quadratur Mandelbrot";
 
 
@@ -131,7 +131,7 @@ TEST(RenderFractalTest, Quadratur_Mandelbrot){
         plane.down = -0.0979408;
         Quadratur_Mandelbrot( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in set Quadratur Mandelbrot";
 
 
@@ -141,7 +141,7 @@ TEST(RenderFractalTest, Quadratur_Mandelbrot){
         plane.down = -0.752845;
         Quadratur_Mandelbrot( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in set Quadratur Mandelbrot";
 }
 
@@ -157,7 +157,7 @@ TEST(RenderFractalTest, Quadratur_Mandelbar){
         plane.down = -0.292987;
         Quadratur_Mandelbar( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in set Quadratur_Mandelbar";
 
 
@@ -167,7 +167,7 @@ TEST(RenderFractalTest, Quadratur_Mandelbar){
         plane.down = 0.801615;
         Quadratur_Mandelbar( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Quadratur_Mandelbar";
 
 
@@ -177,6 +177,6 @@ TEST(RenderFractalTest, Quadratur_Mandelbar){
         plane.down = 0.551104;
         Quadratur_Mandelbar( &plane );
 
-        for(int i = 0; i < 10000; i++)
+        for(int i = 0; i < 30000; i++)
           ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in Quadratur_Mandelbar";
 }
