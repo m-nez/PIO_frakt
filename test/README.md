@@ -10,4 +10,4 @@ Build and run the tests by executig `make run` in this directory.
 `cd /usr/src/gtest` # Go to the source directory  
 `sudo cmake -DBUILD_SHARED_LIBS=ON CMakeLists.txt` # Build shared libraries  
 `sudo make` # Compile  
-`sudo cp *.so /usr/lib` # Copy shared libraries to a directory where the can be found by the linker
+`sudo cp *.so /usr/lib` # Copy shared libraries to a directory where they can be found by the linker
