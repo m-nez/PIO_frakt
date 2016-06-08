@@ -6,6 +6,10 @@ default: deploy
 
 BUILD_DIR=build
 INCLUDE_DIR=include
+
+run: deploy
+	cd build && ./fractal
+
 fract:
 	cd src && $(MAKE)
 
