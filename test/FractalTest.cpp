@@ -180,3 +180,39 @@ TEST(RenderFractalTest, Quadratur_Mandelbar){
         for(int i = 0; i < 30000; i++)
           ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in Quadratur_Mandelbar";
 }
+
+TEST(RenderFractalTest, Phoenix_Julia){
+        Plane plane(100,100);
+        int color_count;
+        c_keys* colors = package_colors(&color_count);
+        plane.color = colors[1].function;
+
+        plane.left = 0.401685;    // iteracja dojdzie do 100 . 
+        plane.right = 0.505315;
+        plane.up = 0.223351;
+        plane.down = 0.223351;
+       	Phoenix_Julia( &plane );
+
+        for(int i = 0; i < 30000; i++)
+          ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in set Quadratur_Mandelbar";
+
+
+        plane.left = -0.521093;    // iteracja dojdzie do 100 .
+        plane.right = -0.410749;
+        plane.up = -0.184879;
+        plane.down = -0.231519;
+       	Phoenix_Julia( &plane );
+
+        for(int i = 0; i < 30000; i++)
+          ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in Quadratur_Mandelbar";
+
+
+        plane.left = -1.05977;   // iteracja nie dojdzie do 100 .
+        plane.right = -1.0252;
+        plane.up = 0.190528;
+        plane.down = 0.13674;
+       	Phoenix_Julia( &plane );
+
+        for(int i = 0; i < 30000; i++)
+          ASSERT_NE(plane.data[i], 255) << "Incorrectly filled in Quadratur_Mandelbar";
+}
