@@ -17,10 +17,10 @@ TEST(RenderFractalTest, set_Mandelbrot){
 	            ASSERT_EQ(plane.data[i], 255) << "Incorrectly filled in set Mandelbrot";
 
 
-	      plane.right = 0.97923;    // iteracja dojdzie do 100 .
-	      plane.left = -0.819686;
-	      plane.up = 0.162952;
-	      plane.down = -0.0381654;
+	      plane.right = 0.1;    // iteracja dojdzie do 100 .
+	      plane.left = -0.4;
+	      plane.up = 0.2;
+	      plane.down = -0.2;
 	      set_Mandelbrot( &plane );
 
 	      for(int i = 0; i < 30000; i++)
